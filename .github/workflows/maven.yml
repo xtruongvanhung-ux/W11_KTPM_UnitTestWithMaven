@@ -47,7 +47,7 @@ jobs:
       if: always()
       id: allure-report
       with:
-        allure_results: target/allure-results
+        allure_results: target/surefire-reports
         allure_history: allure-history
 
     - name: Deploy report to GitHub Pages
