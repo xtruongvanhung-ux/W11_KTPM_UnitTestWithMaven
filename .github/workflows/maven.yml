@@ -6,7 +6,7 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Java CI with Maven
+name: Java CI with Maven and Allure
 
 on:
   push:
@@ -16,23 +16,28 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v4
-    - name: Set up JDK 17
+
+    - name: Set up JDK 21
       uses: actions/setup-java@v4
       with:
         java-version: '21'
         distribution: 'temurin'
-        cache: maven
-    - name: Build with Maven
-      run: mvn -B package --file pom.xml
+
+    - name: Run Tests with Maven
+      run: mvn clean test
+
+    - name: Generate Allure Report
+      if: always()
+      run: mvn allure:report
 
     - name: Get Allure history
       uses: actions/checkout@v4
       if: always()
+      continue-on-error: true
       with:
         ref: gh-pages
         path: gh-pages
@@ -42,7 +47,7 @@ jobs:
       if: always()
       id: allure-report
       with:
-        allure_results: target/surefire-reports
+        allure_results: target/allure-results
         allure_history: allure-history
 
     - name: Deploy report to GitHub Pages
@@ -52,7 +57,6 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: allure-history
         publish_branch: gh-pages
-        force_orphan: true
 
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     #- name: Update dependency graph
