@@ -1,0 +1,46 @@
+package com.mycompany.w11_ktpm_unittestwithmaven;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+import org.junit.jupiter.api.Test;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.By;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import io.qameta.allure.Description;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
+
+public class SeleniumTest {
+  
+    @Feature("Login")
+    @Description("Kiểm tra đăng nhập thành công vào SauceDemo")
+    @Severity(SeverityLevel.CRITICAL)
+    @Test
+    public void openChrome() {
+
+        WebDriverManager.chromedriver().setup();
+
+        WebDriver driver = new ChromeDriver();
+
+        driver.get("https://www.saucedemo.com/");
+        
+        driver.findElement(By.id("user-name")).sendKeys("standard_user");
+
+        driver.findElement(By.id("password")).sendKeys("secret_sauce");
+        
+        driver.findElement(By.id("login-button")).click();
+        
+        assertTrue(driver.getCurrentUrl().contains("inventory.html"));
+
+        driver.manage().window().maximize();
+
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        driver.quit();
+    }
+}
