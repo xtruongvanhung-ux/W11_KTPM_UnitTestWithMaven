@@ -10,6 +10,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 public class SeleniumTest {
   
@@ -21,7 +22,12 @@ public class SeleniumTest {
 
         WebDriverManager.chromedriver().setup();
 
-        WebDriver driver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless=new");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+
+WebDriver driver = new ChromeDriver(options);
 
         driver.get("https://www.saucedemo.com/");
         
