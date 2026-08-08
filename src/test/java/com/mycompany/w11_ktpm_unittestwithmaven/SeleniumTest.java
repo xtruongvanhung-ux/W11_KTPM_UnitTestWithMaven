@@ -18,31 +18,31 @@ public class SeleniumTest {
     @Description("Kiểm tra đăng nhập thành công vào SauceDemo")
     @Severity(SeverityLevel.CRITICAL)
     @Test
-    public void openChrome() {
+    public void openChrome() throws InterruptedException {
 
         WebDriverManager.chromedriver().setup();
 
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless=new");
+        // options.addArguments("--headless=new");
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
 
-WebDriver driver = new ChromeDriver(options);
+        WebDriver driver = new ChromeDriver(options);
 
         driver.get("https://www.saucedemo.com/");
-        
+        Thread.sleep(3000);
         driver.findElement(By.id("user-name")).sendKeys("standard_user");
-
+        Thread.sleep(3000);
         driver.findElement(By.id("password")).sendKeys("secret_sauce");
-        
+        Thread.sleep(3000);
         driver.findElement(By.id("login-button")).click();
-        
+        Thread.sleep(10000);
         assertTrue(driver.getCurrentUrl().contains("inventory.html"));
 
         driver.manage().window().maximize();
 
         try {
-            Thread.sleep(5000);
+            Thread.sleep(10000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
