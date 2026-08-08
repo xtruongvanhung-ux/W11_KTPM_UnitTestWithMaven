@@ -30,13 +30,13 @@ public class SeleniumTest {
         WebDriver driver = new ChromeDriver(options);
 
         driver.get("https://www.saucedemo.com/");
-        Thread.sleep(3000);
+        // Thread.sleep(3000);
         driver.findElement(By.id("user-name")).sendKeys("standard_user");
-        Thread.sleep(3000);
+        // Thread.sleep(3000);
         driver.findElement(By.id("password")).sendKeys("secret_sauce");
-        Thread.sleep(3000);
+        // Thread.sleep(3000);
         driver.findElement(By.id("login-button")).click();
-        Thread.sleep(10000);
+        // Thread.sleep(10000);
         assertTrue(driver.getCurrentUrl().contains("inventory.html"));
 
         driver.manage().window().maximize();
